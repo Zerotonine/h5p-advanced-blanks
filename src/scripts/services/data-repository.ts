@@ -19,7 +19,7 @@ export interface IDataRepository {
  */
 export class H5PDataRepository implements IDataRepository {
   constructor(private h5pConfigData: any, private settings: ISettings,
-    private localization: H5PLocalization, private jquery: JQueryStatic, 
+    private localization: H5PLocalization, private jquery: JQueryStatic,
     private unwrapper: Unrwapper) {
 
   }
@@ -37,7 +37,7 @@ export class H5PDataRepository implements IDataRepository {
   }
 
   getMedia(): any {
-    return this.h5pConfigData.media.type;
+    return this.h5pConfigData?.media?.type;
   }
 
   getTaskDescription(): string {
@@ -57,7 +57,8 @@ export class H5PDataRepository implements IDataRepository {
       if (correctText === "" || correctText === undefined)
         continue;
 
-      var blank = BlankLoader.instance.createBlank("cloze" + i, correctText,
+      const subContentId = this.h5pConfigData?.subContentId;
+      var blank = BlankLoader.instance.createBlank("cloze" + (subContentId ? subContentId + i : i), correctText,
         h5pBlank.hint, h5pBlank.incorrectAnswersList);
 
       blank.finishInitialization();
