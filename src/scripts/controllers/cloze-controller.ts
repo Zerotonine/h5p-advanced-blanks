@@ -44,7 +44,7 @@ export class ClozeController {
   private blankRactives: { [id: string]: Ractive.Ractive } = {};
 
   public get maxScore(): number {
-    return this.cloze.blanks.length;
+    return this.cloze?.blanks?.length;
   }
 
   /**
@@ -52,11 +52,11 @@ export class ClozeController {
    * @return {boolean} True if there is at least one blank with more than one solution.
    */
   public get hasAlternatives(): boolean {
-    return this.cloze.blanks.some(b => b.correctAnswers[0].alternatives.length > 1);
+    return this.cloze?.blanks?.some(b => b.correctAnswers[0].alternatives.length > 1);
   }
 
   public get currentScore(): number {
-    const score = this.cloze.blanks.reduce((score, b) => {
+    const score = this.cloze?.blanks?.reduce((score, b) => {
       const notShowingSolution = !b.isShowingSolution;
       const correctAnswerGiven = b.correctAnswers[0].alternatives.indexOf(b.enteredText || '') !== -1;
 
@@ -74,24 +74,24 @@ export class ClozeController {
 
   public get allBlanksEntered() {
     if (this.cloze)
-      return this.cloze.blanks.every(blank => blank.isError || blank.isCorrect || blank.isRetry);
+      return this.cloze?.blanks?.every(blank => blank.isError || blank.isCorrect || blank.isRetry);
     return false;
   }
 
   public get isSolved(): boolean {
-    return this.cloze.isSolved;
+    return this.cloze?.isSolved;
   }
 
   public get isFilledOut() {
-    if (!this.cloze || this.cloze.blanks.length === 0)
+    if (!this.cloze || this.cloze?.blanks?.length === 0)
       return true;
-    return this.cloze.blanks.some(b => b.enteredText !== '');
+    return this.cloze?.blanks?.some(b => b.enteredText !== '');
   }
 
   public get isFullyFilledOut() {
-    if (!this.cloze || this.cloze.blanks.length === 0)
+    if (!this.cloze || this.cloze?.blanks?.length === 0)
       return true;
-    return this.cloze.blanks.every(b => b.enteredText !== '');
+    return this.cloze?.blanks?.every(b => b.enteredText !== '');
   }
 
   constructor(private repository: IDataRepository, private settings: ISettings, private localization: H5PLocalization, private MessageService: MessageService) {
@@ -126,7 +126,7 @@ export class ClozeController {
 
   checkAll = () => {
     this.cloze.hideAllHighlights();
-    for (var blank of this.cloze.blanks) {
+    for (var blank of this.cloze?.blanks) {
       if ((!blank.isCorrect) && blank.enteredText !== "")
         blank.evaluateAttempt(true, true);
     }
@@ -186,12 +186,12 @@ export class ClozeController {
       && ((this.settings.autoCheck && blank.isCorrect && !this.isSolved)
         || !this.settings.autoCheck)) {
       // move to next blank
-      var index = this.cloze.blanks.indexOf(blank);
+      var index = this.cloze?.blanks?.indexOf(blank);
       var nextId;
-      while (index < this.cloze.blanks.length - 1 && !nextId) {
+      while (index < this.cloze?.blanks?.length - 1 && !nextId) {
         index++;
-        if (!this.cloze.blanks[index].isCorrect)
-          nextId = this.cloze.blanks[index].id;
+        if (!this.cloze?.blanks[index]?.isCorrect)
+          nextId = this.cloze?.blanks[index]?.id;
       }
 
       if (nextId)
@@ -263,7 +263,7 @@ export class ClozeController {
       this.createHighlightBinding(highlight);
     }
 
-    for (var blank of this.cloze.blanks) {
+    for (var blank of this.cloze?.blanks) {
       this.createBlankBinding(blank);
     }
   }
@@ -278,7 +278,7 @@ export class ClozeController {
       highlightRactive.set("object", highlight);
     }
 
-    for (var blank of this.cloze.blanks) {
+    for (var blank of this.cloze?.blanks) {
       var blankRactive = this.blankRactives[blank.id];
       blankRactive.set("blank", blank);
     }
@@ -310,10 +310,10 @@ export class ClozeController {
   }
 
   public getCorrectAnswerList(): string[][] {
-    if (!this.cloze || this.cloze.blanks.length === 0)
+    if (!this.cloze || this.cloze?.blanks?.length === 0)
       return [[]];
     let result = [];
-    for (var blank of this.cloze.blanks) {
+    for (var blank of this.cloze?.blanks) {
       result.push(blank.getCorrectAnswers());
     }
 
