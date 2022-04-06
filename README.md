@@ -1,3 +1,5 @@
+# Fork
+This forked version has some small changes so it works together with Course Presentations
 # H5P Advanced Blanks
 
 This is an advanced 'Fill the blanks' content type for h5p. In addition to most of the features of the regular 'Fill the blanks' content type it supports:
