@@ -57,7 +57,8 @@ export default class AdvancedBlanks extends (H5P.Question as { new(): any; }) {
       behaviour: {
         mode: 'typing',
         selectAlternatives: 'alternatives'
-      }
+      },
+      subContentId: contentData?.subContentId,
     }, config);
 
     this.jQuery = H5P.jQuery;
